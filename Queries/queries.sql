@@ -71,3 +71,41 @@ inner join dept_info as di
 ON ri.emp_no = di.emp_no
 where (di.dept_name = 'Sales')
 and (di.dept_name = 'Development');
+
+select ri.emp_no,
+	ri.first_name,
+	ri.last_name,
+	di.dept_name
+into mentoring_info
+from retirement_info as ri
+inner join dept_info as di
+ON ri.emp_no = di.emp_no
+where di.dept_name in ('Sales', 'Development')
+order by di.dept_name;
+
+SELECT DISTINCT ON (ti.title) e.emp_no,
+	e.first_name,
+	e.last_name,
+	ti.title,
+	ti.from_date,
+	ti.to_date
+--INTO retirement_titles
+FROM employees as e
+inner join titles as ti
+ON e.emp_no = ti.emp_no
+WHERE (birth_date BETWEEN '1952-01-01' AND '1955-12-31')
+ORDER BY (ti.title), e.emp_no DESC;
+
+-- Use Dictinct with Orderby to remove duplicate rows
+SELECT DISTINCT ON (e.emp_no) e.emp_no,
+	e.first_name,
+	e.last_name,
+	ti.title,
+	ti.from_date,
+	ti.to_date
+INTO retirement_titles
+FROM employees as e
+inner join titles as ti
+ON e.emp_no = ti.emp_no
+WHERE e.birth_date BETWEEN '1952-01-01' AND '1955-12-31'
+ORDER BY (e.emp_no), e.emp_no DESC;
