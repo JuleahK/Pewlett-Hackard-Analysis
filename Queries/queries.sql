@@ -48,3 +48,26 @@ FROM retirement_info as ri
 LEFT JOIN dept_emp as de
 ON ri.emp_no = de.emp_no
 WHERE de.to_date = ('9999-01-01');
+
+--list 3 dept retirees
+select ce.emp_no,
+	ce.first_name,
+	ce.last_name,
+	d.dept_name
+into dept_info
+from current_emp as ce
+inner join dept_emp as de
+on (ce.emp_no = de.emp_no)
+inner join departments as d
+on (de.dept_no = d.dept_no);
+
+select ri.emp_no,
+	ri.first_name,
+	ri.last_name,
+	di.dept_name
+--into sales_info
+from retirement_info as ri
+inner join dept_info as di
+ON ri.emp_no = di.emp_no
+where (di.dept_name = 'Sales')
+and (di.dept_name = 'Development');
